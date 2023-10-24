@@ -1,0 +1,7 @@
+### =======================
+### RedHat specified variables 
+
+# OpenSSH service name
+openssh_server_service_name: sshd
+# OpenSSH configuration option - override default of no subsystems
+openssh_server_Subsystem: "sftp /usr/libexec/openssh/sftp-server -f AUTHPRIV -l INFO"

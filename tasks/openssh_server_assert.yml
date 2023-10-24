@@ -1,0 +1,11 @@
+- name: openssh_server_assert | Test if openssh_server_role_action is defined and set correctly
+  assert:
+    that:
+      - openssh_server_role_action is defined
+    quiet: yes
+
+- name: openssh_server_assert | Test if openssh_server_service_enabled is defined and set correctly
+  assert:
+    that:
+      - openssh_server_service_enabled is defined
+    quiet: yes

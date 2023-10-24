@@ -1,0 +1,57 @@
+- name: openssh-server | openssh_server_assert | Perform Conditional Tasks
+  import_tasks: openssh_server_assert.yml
+  run_once: yes
+  delegate_to: localhost
+  tags:
+    - always
+    - asserts
+
+- name: openssh-server | include_vars | Gather OS specific variables
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_facts['distribution'] | lower }}_{{ ansible_facts['distribution_version'] | lower }}.yml"
+        - "{{ ansible_facts['distribution'] | lower }}_{{ ansible_facts['distribution_major_version'] | lower }}.yml"
+        - "{{ ansible_facts['distribution'] | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}_{{ ansible_facts['distribution_version'] | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}_{{ ansible_facts['distribution_major_version'].split('.')[0] }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
+      paths:
+        - "{{ role_path }}/vars"
+  ignore_errors: true
+  tags:
+    - always
+    - vars
+
+- name: openssh-server | openssh_server_install | Install OpenSSH-server
+  include_tasks: openssh_server_install.yml
+  when: >
+    openssh_server_role_action in ['all', 'install']
+  tags:
+    - always
+    - install
+
+- name: openssh-server | openssh_server_update | Upgrade OpenSSH-server
+  include_tasks: openssh_server_install.yml
+  when: >
+    openssh_server_role_action in ['upgrade']
+  tags:
+    - always
+    - upgrade
+
+- name: openssh-server | openssh_server_configure | Configure OpenSSH-server
+  include_tasks: openssh_server_configure.yml
+  when: >
+    openssh_server_role_action in ['all', 'configure']
+  tags:
+    - always
+    - configure
+
+- name: openssh-server | openssh_server_check | Check if OpenSSH-server is responding
+  include_tasks: openssh_server_check.yml
+  when: >
+    openssh_server_role_action in ['all', 'check']
+  tags:
+    - always
+    - check

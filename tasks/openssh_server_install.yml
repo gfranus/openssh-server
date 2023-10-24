@@ -1,0 +1,25 @@
+- name: openssh_server_install | Update the repository cache and install OpenSSH-server package
+  apt:
+    name: "{{ openssh_server_package_name }}" 
+    state: present
+    update_cache: yes
+  when: >
+    ansible_os_family | lower == "debian"
+
+- name: openssh_server_install | Update the repository cache and install OpenSSH-server package
+  dnf:
+    name: "{{ openssh_server_package_name }}" 
+    state: present
+    update_cache: yes
+  when: >
+    ansible_os_family | lower == "redhat" and
+    ansible_distribution_major_version >= '8'
+
+- name: openssh_server_install | Update the repository cache and install OpenSSH-server package
+  yum:
+    name: "{{ openssh_server_package_name }}" 
+    state: present
+    update_cache: yes
+  when: >
+    ansible_os_family | lower == "redhat" and
+    ansible_distribution_major_version < '8'

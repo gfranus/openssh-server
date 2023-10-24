@@ -1,0 +1,7 @@
+### =======================
+### Debian specified variables 
+
+# OpenSSH service name
+openssh_server_service_name: ssh
+# OpenSSH configuration option - override default of no subsystems
+openssh_server_Subsystem: "sftp /usr/lib/openssh/sftp-server -f AUTHPRIV -l INFO"

@@ -1,0 +1,6 @@
+- name: openssh_server_check | Wait for port '{{ openssh_server_Port }}' to become open on the host
+  wait_for:
+    host: 127.0.0.1
+    port: "{{ openssh_server_Port }}"
+    timeout: 5
+    msg: "{{ openssh_server_Port }} port is not responding!"

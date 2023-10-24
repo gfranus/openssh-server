@@ -1,0 +1,26 @@
+- name: openssh_server_configure | Deploy configuration file
+  template:
+    src: sshd_config.j2
+    dest: "{{ openssh_server_config_path }}"
+    mode: 0600
+    owner: root
+    group: root
+  notify: restart OpenSSH-server
+
+- name: openssh_server_configure | Deploy banner file
+  template:
+    src: banner.j2
+    dest: "{{ openssh_server_banner_path }}"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: openssh_server_configure | Enable service on system startup
+  service:
+    name: "{{ openssh_server_service_name }}"
+    enabled: true
+  when: >
+    openssh_server_service_enabled | bool
+
+- name: openssh_server_configure | Force flush handlers
+  meta: flush_handlers

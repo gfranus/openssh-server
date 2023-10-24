@@ -1,0 +1,90 @@
+### =======================
+### Default variables 
+
+default_log_directory_mode: 02750
+default_log_directory_group_name: root
+default_directory_acl_etype: user
+default_directory_acl_permissions: rwx
+
+
+### =======================
+### General variables for role
+
+# Role action (all/)
+openssh_server_role_action: all
+# Enable service on system startup
+openssh_server_service_enabled: "yes"
+
+
+### =======================
+### Configuration options for OpenSSH-server
+
+# Allow only specified users to logon
+# openssh_server_AllowUsers: "root admin"
+# Allow only specified groups to logon
+# openssh_server_AllowGroups: "root"
+
+# Listen port
+openssh_server_Port: 22
+# Listen address ("inet" to disable ipv6)
+openssh_server_AddressFamily: "any"
+openssh_server_ListenAddress: 0.0.0.0
+# PID file
+openssh_server_PidFile: "/var/run/sshd.pid"
+# Specifies whether sshd should print /etc/motd when a user logs in interactively
+openssh_server_PrintMotd: "no"
+# Specifies whether the system should send TCP keepalive messages to the other side
+openssh_server_TCPKeepAlive: "yes"
+# Specifies whether sshd should print the date and time of the last user login when a user logs in interactively.
+openssh_server_PrintLastLog: "yes"
+
+# Supported HostKey algorithms by order of preference.
+openssh_server_HostKey:
+  - /etc/ssh/ssh_host_ed25519_key
+  - /etc/ssh/ssh_host_rsa_key
+  - /etc/ssh/ssh_host_ecdsa_key
+# The key exchange methods that are used to generate per-connection keys
+openssh_server_KexAlgorithms: "curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256"
+# Specifies the maximum amount of data
+openssh_server_RekeyLimit: "default 1h"
+# The ciphers to encrypt the connection
+openssh_server_Ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+# The message authentication codes used to detect traffic modification
+openssh_server_MACs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256"
+
+# LogLevel VERBOSE logs user's key fingerprint on login. Needed to have a clear audit track of which key was using to log in.
+openssh_server_LogLevel: VERBOSE
+# Gives the facility code that is used when logging messages
+openssh_server_SyslogFacility: AUTHPRIV
+
+# The server disconnects after this time if the user has not successfully logged in
+openssh_server_LoginGraceTime: 1m
+# Sets a timeout interval in seconds
+openssh_server_ClientAliveInterval: 300
+# Tuned logins
+openssh_server_StrictModes: "yes"
+openssh_server_MaxAuthTries: 3
+openssh_server_MaxSessions: 4
+# Permit Root login
+openssh_server_PermitRootLogin: "no"
+# To disable tunneled clear text passwords, change to no here!
+openssh_server_PermitEmptyPasswords: "no"
+# Change to yes to enable challenge-response passwords (beware issues with some PAM modules and threads)
+openssh_server_ChallengeResponseAuthentication: "yes"
+# Password authentication
+openssh_server_PasswordAuthentication: "yes"
+# Set this to 'yes' to enable PAM authentication, account processing
+openssh_server_UsePAM: "yes"
+# Specifies whether to ignore per-user .rhosts and .shosts files during HostbasedAuthentication.
+openssh_server_IgnoreRhosts: "yes"
+
+# Specifies whether ssh-agent forwarding is permitted
+openssh_server_AllowAgentForwarding: "no"
+# Specifies whether TCP forwarding is permitted
+openssh_server_AllowTcpForwarding: "no"
+# Specifies whether remote hosts are allowed to connect to ports forwarded for the client.
+openssh_server_GatewayPorts: "no"
+# Specifies whether X11 forwarding is permitted
+openssh_server_X11Forwarding: "no"
+# Specifies whether sshd should bind the X11 forwarding server to the loopback address or to the wildcard address
+openssh_server_X11UseLocalhost: "yes"

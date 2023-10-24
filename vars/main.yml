@@ -1,0 +1,15 @@
+### =======================
+### Default variables 
+
+date: "{{ lookup('pipe', 'date +%Y-%m-%d_%H:%M:%S') }}"
+
+
+### =======================
+### General variables for role
+
+# OpenSSH package name
+openssh_server_package_name: openssh-server
+# OpenSSH configuration file path
+openssh_server_config_path: /etc/ssh/sshd_config
+# OpenSSH banner file path
+openssh_server_banner_path: /etc/ssh/banner

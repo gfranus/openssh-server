@@ -1,0 +1,114 @@
+{{ ansible_managed | comment }}
+
+{% if openssh_server_AllowUsers is defined and openssh_server_AllowUsers|length > 0 -%}
+# == Allowed users
+AllowUsers {{ openssh_server_AllowUsers }}
+
+
+{% endif -%}
+{% if openssh_server_AllowGroups is defined and openssh_server_AllowGroups|length > 0 -%}
+# == Allowed groups
+AllowGroups {{ openssh_server_AllowGroups }}
+
+
+{% endif -%}
+
+# == General configuration options
+
+# Listen port
+Port {{ openssh_server_Port }}
+# Listen address
+AddressFamily {{ openssh_server_AddressFamily }}
+ListenAddress {{ openssh_server_ListenAddress }}
+# PID file
+PidFile {{ openssh_server_PidFile }}
+# banner
+Banner /etc/ssh/banner
+
+# override default of no subsystems
+Subsystem {{ openssh_server_Subsystem }}
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+
+# Specifies whether sshd should print /etc/motd when a user logs in interactively.
+PrintMotd {{ openssh_server_PrintMotd }}
+# Specifies whether sshd should print the date and time of the last user login when a user logs in interactively.
+PrintLastLog {{ openssh_server_PrintLastLog }}
+# Specifies whether the system should send TCP keepalive messages to the other side
+TCPKeepAlive {{ openssh_server_TCPKeepAlive }}
+
+
+# == Ciphers and keying
+
+# Supported HostKey algorithms by order of preference.
+{% for key in openssh_server_HostKey -%}
+HostKey {{ key }}
+{% endfor %}
+# The key exchange methods that are used to generate per-connection keys
+KexAlgorithms {{ openssh_server_KexAlgorithms }}
+# Specifies the maximum amount of data
+RekeyLimit {{ openssh_server_RekeyLimit }}
+# The ciphers to encrypt the connection
+Ciphers {{ openssh_server_Ciphers }}
+# The message authentication codes used to detect traffic modification
+MACs {{ openssh_server_MACs }}
+
+
+# == Logging
+
+# LogLevel VERBOSE logs user's key fingerprint on login. Needed to have a clear audit track of which key was using to log in.
+LogLevel {{ openssh_server_LogLevel }}
+# Gives the facility code that is used when logging messages
+SyslogFacility {{ openssh_server_SyslogFacility }}
+
+
+# == Authentication
+
+# The server disconnects after this time if the user has not successfully logged in
+LoginGraceTime {{ openssh_server_LoginGraceTime }}
+# Sets a timeout interval in seconds
+ClientAliveInterval {{ openssh_server_ClientAliveInterval }}
+# Permit Root login
+PermitRootLogin {{ openssh_server_PermitRootLogin }}
+# Tuned logins
+StrictModes {{ openssh_server_StrictModes }}
+MaxAuthTries {{ openssh_server_MaxAuthTries }}
+MaxSessions {{ openssh_server_MaxSessions }}
+
+# Specifies the file that contains the public keys used for user authentication
+AuthorizedKeysFile .ssh/authorized_keys
+
+# To disable tunneled clear text passwords, change to no here!
+PermitEmptyPasswords {{ openssh_server_PermitEmptyPasswords }}
+# Change to yes to enable challenge-response passwords (beware issues with some PAM modules and threads)
+ChallengeResponseAuthentication {{ openssh_server_ChallengeResponseAuthentication }}
+# Password authentication
+PasswordAuthentication {{ openssh_server_PasswordAuthentication }}
+# Set this to 'yes' to enable PAM authentication, account processing
+UsePAM {{ openssh_server_UsePAM }}
+# Specifies whether to ignore per-user .rhosts and .shosts files during HostbasedAuthentication.
+IgnoreRhosts {{ openssh_server_IgnoreRhosts }}
+
+
+# == GSSAPI options
+
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials no
+
+
+# == Forwarding
+
+# Specifies whether ssh-agent forwarding is permitted
+AllowAgentForwarding {{ openssh_server_AllowAgentForwarding }}
+# Specifies whether TCP forwarding is permitted
+AllowTcpForwarding {{ openssh_server_AllowTcpForwarding }}
+# Specifies whether remote hosts are allowed to connect to ports forwarded for the client.
+GatewayPorts {{ openssh_server_GatewayPorts }}
+# Specifies whether X11 forwarding is permitted
+X11Forwarding {{ openssh_server_X11Forwarding }}
+# Specifies whether sshd should bind the X11 forwarding server to the loopback address or to the wildcard address
+X11UseLocalhost {{ openssh_server_X11UseLocalhost }}
