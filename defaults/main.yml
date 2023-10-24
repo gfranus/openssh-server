@@ -10,7 +10,7 @@ default_directory_acl_permissions: rwx
 ### =======================
 ### General variables for role
 
-# Role action (all/)
+# Role action (all/install/upgrade/configure/check)
 openssh_server_role_action: all
 # Enable service on system startup
 openssh_server_service_enabled: "yes"

@@ -32,8 +32,8 @@
     - always
     - install
 
-- name: openssh-server | openssh_server_update | Upgrade OpenSSH-server
-  include_tasks: openssh_server_install.yml
+- name: openssh-server | openssh_server_upgrade | Upgrade OpenSSH-server
+  include_tasks: openssh_server_upgrade.yml
   when: >
     openssh_server_role_action in ['upgrade']
   tags:
