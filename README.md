@@ -8,7 +8,7 @@ Ansible role that installs/upgrades and configures OpenSSH-server with default c
 * Install or upgrade OpenSSH-server package.
 * Configure OpenSSH-server service.
 * Enable OpenSSH-server service.
-* Check if OpenSSH-server is responding.
+* Check if OpenSSH-server is responding on declared port.
 
 ## Requirements
 
@@ -60,7 +60,7 @@ Using the role is fairly straightforward:
 
 ## License
 
-MIT
+This program is free software: you can redistribute it and/or modify it under the terms of the MIT License (MIT). See the LICENSE for details.
 
 ## Author Information
 
