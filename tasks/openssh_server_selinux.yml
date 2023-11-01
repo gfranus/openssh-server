@@ -1,4 +1,4 @@
-- name: openssh_server_selinux | Configure selinux to allow openssh_server_Port
+- name: openssh_server_selinux | Configure SELinux to allow openssh_server_Port
   community.general.seport:
     ports: "{{ openssh_server_Port }}"
     proto: "tcp"
