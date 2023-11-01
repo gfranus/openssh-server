@@ -1,0 +1,9 @@
+- name: openssh_server_selinux | Configure selinux to allow openssh_server_Port
+  community.general.seport:
+    ports: "{{ openssh_server_Port }}"
+    proto: "tcp"
+    setype: "ssh_port_t"
+    state: "present"
+  when: >
+    ansible_selinux.status is defined and
+    ansible_selinux.status == "enabled"

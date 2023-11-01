@@ -19,7 +19,6 @@
         - "{{ ansible_facts['os_family'] | lower }}.yml"
       paths:
         - "{{ role_path }}/vars"
-  ignore_errors: true
   tags:
     - always
     - vars
@@ -36,6 +35,14 @@
   include_tasks: openssh_server_upgrade.yml
   when: >
     openssh_server_role_action in ['upgrade']
+  tags:
+    - always
+    - upgrade
+
+- name: openssh-server | openssh_server_selinux | Configure SELinux to run OpenSSH-server
+  include_tasks: openssh_server_selinux.yml
+  when: >
+    openssh_server_role_action in ['all', 'selinux']
   tags:
     - always
     - upgrade
